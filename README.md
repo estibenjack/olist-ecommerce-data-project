@@ -15,7 +15,7 @@ The executive team wanted answers to several key business questions:
 - Which customer segments and regions generate the highest long-term value?
 - Which product categories and sellers create operational or customer satisfaction risks?
 
-The challenge was that the data was fragmented across 9 separate CSV files, contained inconsistencies, missing values and Portuguese product category names.
+The challenge was that the data was fragmented across 9 CSV files and contained inconsistencies, missing values and Portuguese product category names.
 
 My goal was to design and build an end-to-end analytics pipeline that transformed this raw operational data into a structured reporting layer capable of supporting executive decision-making.
 
@@ -25,16 +25,7 @@ My goal was to design and build an end-to-end analytics pipeline that transforme
 
 This project uses the [Brazilian E-Commerce Public Dataset by Olist](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce), sourced from Kaggle.
 
-The dataset contains:
-- 100k+ orders
-- customer information
-- product and seller data
-- payments
-- customer reviews
-- geolocation data
-- logistics and delivery information
-
-The data covers real commercial transactions between 2016–2018.
+The dataset contains 1.5 million rows across 9 tables covering real commercial transactions between 2016 and 2018, including orders, customers, products, sellers, payments, reviews and geolocation data.
 
 ---
 
@@ -43,6 +34,7 @@ The data covers real commercial transactions between 2016–2018.
 | Tool | Purpose |
 |---|---|
 | PostgreSQL | Data cleaning, transformation, modelling and analysis |
+| SQL | Layered pipeline from raw ingestion through to business-ready analytical views |
 | Power BI | Interactive dashboard development and business visualisation |
 | GitHub | Project documentation and version control |
 
@@ -50,47 +42,129 @@ The data covers real commercial transactions between 2016–2018.
 
 ## 🏗️ Data Architecture
 
-The project follows a layered analytics architecture informed by modern data warehousing practices.
+I structured this project using a layered analytics approach, moving from raw source data into cleaned staging models and finally into business-ready reporting tables.
+
+The goal was to keep the raw data untouched, clean and standardise it in staging, and then build reliable analytical models for reporting in Power BI.
 
 ### Raw Layer (`raw/`)
-Contains unmodified source tables imported directly from the CSV files.
+The raw layer contains the original CSV data loaded directly into the database with no transformations applied.
 
-Tables:
-- raw_customers
-- raw_geolocation
-- raw_order_items
-- raw_order_payments
-- raw_order_reviews
-- raw_orders
-- raw_products
-- raw_sellers
-- raw_product_category_translation
+I mainly used this layer for profiling and data quality checks before building any transformations. I wanted to understand how reliable the data was, spot inconsistencies early, and avoid issues later when calculating KPIs.
 
+During a full exploratory data quality assessment, I checked for:
+- Duplicate primary keys
+- Missing values in important columns
+- Invalid dates and delivery records
+- Geography spelling inconsistencies
+- Pricing and payment outliers
+- One-to-many joins that could inflate metrics
+
+Key profiling issues I found included:
+
+- Over 1M geolocation rows with lots of duplicate ZIP mappings
+- Seller city names entered in many different formats
+- Coordinates outside Brazil that needed filtering
+- Products missing category and metadata information
+- Orders marked as delivered but missing delivery dates
+- Orders using multiple payment records
+- Around 8% of deliveries arriving late
+
+These findings helped shape the cleaning logic I later built in the staging layer.
+
+_**Example logic: Profiling checks**_
+```sql
+-- Validate customer_id uniqueness
+SELECT
+    customer_id,
+    COUNT(*) AS frequency
+FROM raw.customers
+GROUP BY 1
+HAVING COUNT(*) > 1;
+
+-- Identify inconsistent seller city names
+SELECT
+    seller_city,
+    COUNT(*) AS frequency
+FROM raw.sellers
+GROUP BY 1
+ORDER BY 1 ASC;
+```
 ---
 
 ### Cleaning Layer (`staging/`)
-Contains cleaned and transformed views used to standardise the source data.
+The staging layer contains cleaned and standardised views built to prepare the source data for reliable analysis.
 
-Transformations included:
-- handling missing values
-- standardising text/city names
-- translating Portuguese product categories
-- validating timestamps
-- calculating delivery durations
-- removing duplicate or invalid records
+This is where I handled most of the transformation work needed to make the data reliable for analysis.
+
+Some of the cleaning and transformation steps included:
+- Standardising city and state names
+- Removing invalid geographic records
+- Deduplicating geolocation data
+- Translating Portuguese product categories
+- Validating timestamps
+- Filtering anomalous future dates
+- Aggregating payment rows before joins
+- Creating delivery performance flags
+
+I also used this layer to fix structural issues I found during profiling, especially around geography inconsistencies and duplicated payment behaviour.
+
+_**Example logic: Adding the `is_late_delivery` flag**_
+```sql
+SELECT 
+    order_id,
+    order_estimated_delivery_date,
+    order_delivered_customer_date,
+    CASE 
+        WHEN order_delivered_customer_date > order_estimated_delivery_date THEN 1 
+        ELSE 0 
+    END AS is_late_delivery
+FROM staging.stg_orders;
+```
 
 ---
 
 ### Analytics Layer (`gold/`)
-Contains business-ready analytical models used for reporting and dashboarding.
+The analytics/marts layer contains the final business-ready models used for reporting and dashboarding.
 
-Key analytical views:
+Here, I consolidated transactional, customer, payment, delivery, and review data into denormalised analytical views that could support KPI tracking and business analysis in Power BI.
+
+Main analytical models:
 - `fact_sales`
 - `monthly_revenue`
 - `delivery_performance`
 - `customer_segments`
 
-These analytical views aggregate transactional, customer, delivery and review data into business-ready models optimised for KPI reporting and Power BI visualisation.
+These models support analysis across:
+- Revenue trends
+- Customer behaviour
+- Delivery performance
+- Seller activity
+- Payment preferences
+- Product category performance
+- Customer review trends
+
+_**Example logic: Building the customer segments**_
+```sql
+WITH customer_stats AS (
+	SELECT
+		customer_id,
+		customer_city,
+		customer_state,
+		COUNT(DISTINCT order_id) AS total_orders,
+		SUM(total_item_value) AS lifetime_value,
+		MAX(order_purchase_timestamp) AS last_purchase_date
+	FROM gold.fact_sales
+	GROUP BY 1, 2, 3
+)
+SELECT
+	*,
+	CASE
+		WHEN total_orders > 1 THEN 'Repeat Customer'
+		WHEN total_orders = 1 AND lifetime_value > 200 THEN 'High-Value One-Timer'
+		ELSE 'Standard Customer'
+	END as segment_label
+FROM customer_stats;
+```
 
 ---
 
