@@ -2,18 +2,18 @@
 
 ## 🎭 Business Scenario
 
-It is late 2018, and I am working as a Data Analyst for Olist, a Brazilian e-commerce marketplace. The executive leadership team has requested a clear picture of how the business has performed over the previous two years, with a particular focus on revenue growth, regional performance and customer satisfaction.
+It's late 2018, and I'm working as a Data Analyst for Olist, a Brazilian e-commerce marketplace. The executive leadership team has requested a clear picture of how the business has performed over the previous two years, with a particular focus on revenue growth, regional performance and customer satisfaction.
 
-The executive team wanted answers to several key business questions:
+To support this, I needed to answer several key business questions.
 
 **The main question:**
 - How can Olist improve sustainable growth while maintaining customer satisfaction across regions and product categories?
 
 **Supporting questions:**
-- Is revenue growth driven by increasing order volume or higher-value purchases?
-- How do delivery performance and regional operations impact customer satisfaction?
+- Is revenue growth being driven by increasing order volume or higher-value purchases?
+- How does delivery performance impact customer satisfaction?
 - Which customer segments and regions generate the highest long-term value?
-- Which product categories and sellers create operational or customer satisfaction risks?
+- Which product categories or sellers create operational or customer satisfaction risks?
 
 The challenge was that the data was fragmented across 9 CSV files and contained inconsistencies, missing values and Portuguese product category names.
 
