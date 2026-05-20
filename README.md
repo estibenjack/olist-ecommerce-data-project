@@ -12,8 +12,8 @@ To support this, I needed to answer several key business questions.
 **Supporting questions:**
 - Is revenue growth being driven by increasing order volume or higher-value purchases?
 - How does delivery performance impact customer satisfaction?
-- Which customer segments and regions generate the highest long-term value?
-- Which product categories or sellers create operational or customer satisfaction risks?
+- Which regions experience the worst delivery performance, and how does it affect satisfaction?
+- Which product categories create the greatest operational or customer satisfaction risks?
 
 The challenge was that the data was fragmented across 9 CSV files and contained inconsistencies, missing values and Portuguese product category names.
 
@@ -131,8 +131,11 @@ Here, I consolidated transactional, customer, payment, delivery, and review data
 Main analytical models:
 - `fact_sales`
 - `monthly_revenue`
+- `revenue_growth`
 - `delivery_performance`
 - `customer_segments`
+- `region_segment_ltv`
+- `category_risk`
 
 These models support analysis across:
 - Revenue trends
@@ -178,6 +181,8 @@ FROM customer_stats;
 ### Customer Experience
 - Customer Review Score
 - Average Delivery Time
+- Late Delivery Rate
+- Freight as % of Order Value
 
 ### Commercial Performance
 - Regional Sales Performance
