@@ -213,9 +213,9 @@ On-time orders average a review score of 4.21. Late orders average 2.55 - a 1.66
 
 The North is slow (22.2 avg days) but predictable — customers seem to accept the wait. The Northeast is the bigger problem: 14.2% late rate (highest of any region), 3.91 avg score (lowest), and Olist is regularly missing its own delivery estimates. Worst states: AL (24.1% late), MA (3.76 avg score), CE (1,426 orders affected).
 
-**Q: bed_bath_table and office_furniture are the highest-risk categories**
+**Q: `bed_bath_table` and `office_furniture` are the highest-risk categories**
 
-bed_bath_table has the most late deliveries by volume (920) and a 3.93 score. office_furniture scores 3.52, the lowest of any category with 1,000+ orders, despite only an 8.9% late rate, suggesting damage in transit for heavy items.
+`bed_bath_table` has the most late deliveries by volume (920) and a 3.93 score. `office_furniture` scores 3.52, the lowest of any category with 1,000+ orders, despite only an 8.9% late rate, suggesting damage in transit for heavy items.
 
 **Main recommendation:**
 
