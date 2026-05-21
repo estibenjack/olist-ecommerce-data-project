@@ -219,13 +219,9 @@ On-time orders average a review score of 4.21. Late orders average 2.55 - a 1.66
 
 The North is slow (22.2 avg days) but predictable — customers seem to accept the wait. The Northeast is the bigger problem: 14.2% late rate (highest of any region), 3.91 avg score (lowest), and Olist is regularly missing its own delivery estimates. Worst states: AL (24.1% late), MA (3.76 avg score), CE (1,426 orders affected).
 
-- **`bed_bath_table` and `office_furniture` are the highest-risk categories**
+- **Bed, Bath & Table and Office Furniture are the highest-risk categories**
 
-`bed_bath_table` has the most late deliveries by volume (920) and a 3.93 score. `office_furniture` scores 3.52, the lowest of any category with 1,000+ orders, despite only an 8.9% late rate, suggesting damage in transit for heavy items.
-
-**Main recommendation:**
-
-To sustain growth, Olist should prioritise delivery reliability in the Northeast — particularly AL, MA and CE — and address fulfilment for high-volume categories like `bed_bath_table`. Late delivery is the clearest driver of poor satisfaction, and fixing it in the regions and categories where it's most concentrated would have the biggest impact.
+Bed, Bath & Table has the most late deliveries by volume (920) and a 3.93 score. Office Furniture scores 3.52, the lowest of any category with 1,000+ orders, despite only an 8.9% late rate, suggesting damage in transit for heavy items.
 
 ---
 
@@ -237,15 +233,21 @@ Below is a walkthrough of each row:
 
 **Top row — KPI cards**
 
-Six headline numbers across the top: total revenue, total orders, average order value, average review score and average delivery days. These give a quick snapshot of the business before looking at the detail below.
+![Top row screenshot](assets/row-1-screenshot.png)
+
+Six headline numbers across the top: total revenue, total orders, late delivery rate, total items sold, average review score and average delivery days. These give a quick snapshot of the business before looking at the detail below.
 
 **Middle row — Revenue and growth**
+
+![Middle row screenshot](assets/row-2-screenshot.png)
 
 - _Average Order Value Over Time_ — a flat line throughout the period, which confirms growth isn't coming from bigger baskets
 - _Revenue & Order Volume Over Time_ — revenue and order count plotted together, both climbing steadily from early 2017 to 2018, driven by volume
 - _Monthly Revenue Growth %_ — shows the month-on-month growth rate. Big swings early on when order numbers were still small
 
 **Bottom row — Delivery and satisfaction**
+
+![Bottom row screenshot](assets/row-3-screenshot.png)
 
 - _On-Time vs Late: Review Score_ — the clearest chart on the page. Two bars: 4.21 for on-time deliveries, 2.55 for late deliveries. The gap makes the correlation between punctual deliveries and better review scores immediately obvious
 - _Review Score by Region_ — satisfaction broken down by Brazil's five regions, with the Northeast visibly below the rest
