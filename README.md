@@ -23,6 +23,12 @@ My goal was to design and build an end-to-end analytics pipeline that transforme
 
 ---
 
+## 📸 Dashboard
+
+![Sales & Delivery Intelligence Dashboard](assets/dashboard-screenshot.png)
+
+---
+
 ## 📊 Dataset
 
 This project uses the [Brazilian E-Commerce Public Dataset by Olist](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce), sourced from Kaggle.
@@ -223,19 +229,43 @@ To sustain growth, Olist should prioritise delivery reliability in the Northeast
 
 ---
 
-## ⚙️ Current Project Progress
+## 📊 Data Visualisation
 
-### ✅ Completed
+I created a single page dashboard, split into two rows of charts, in Power BI to present my findings.
 
-- Data profiling and quality assessment
-- Raw-to-staging cleaning pipeline
-- Data standardisation and transformation
-- Gold-layer analytical view creation
-- Business findings and analysis
+Below is a walkthrough of each row:
 
-### 🚧 In Progress
+**Top row — KPI cards**
 
-- Power BI dashboard development
-- Executive summary and final presentation
+Six headline numbers across the top: total revenue, total orders, average order value, average review score and average delivery days. These give a quick snapshot of the business before looking at the detail below.
+
+**Middle row — Revenue and growth**
+
+- _Average Order Value Over Time_ — a flat line throughout the period, which confirms growth isn't coming from bigger baskets
+- _Revenue & Order Volume Over Time_ — revenue and order count plotted together, both climbing steadily from early 2017 to 2018, driven by volume
+- _Monthly Revenue Growth %_ — shows the month-on-month growth rate. Big swings early on when order numbers were still small
+
+**Bottom row — Delivery and satisfaction**
+
+- _On-Time vs Late: Review Score_ — the clearest chart on the page. Two bars: 4.21 for on-time deliveries, 2.55 for late deliveries. The gap makes the correlation between punctual deliveries and better review scores immediately obvious
+- _Review Score by Region_ — satisfaction broken down by Brazil's five regions, with the Northeast visibly below the rest
+- _Late Delivery vs Satisfaction by Category_ — a scatter plot where each dot is a product category, plotted by late delivery rate and average review score. Categories sitting bottom-right (high late rate, low score) are the ones that need attention most
 
 ---
+
+## 💡 Recommendations
+
+**1. Fix delivery reliability in the Northeast**
+
+The Northeast has a 14.2% late rate — nearly double the Southeast. Alagoas (AL), Maranhão (MA) and Ceará (CE) are the worst states. Improving logistics partnerships or setting more realistic delivery estimates for this region would have the biggest impact on customer satisfaction.
+
+**2. Review fulfilment for the Bed, Bath & Table category**
+
+920 late deliveries and a 3.93 score make this the highest-risk category by volume. It's worth looking at whether sellers in this category are consistently missing shipping windows and whether tighter SLAs would help.
+
+**3. Investigate packaging for Office Furniture**
+
+Office Furniture scores 3.52, the lowest of any major category, despite only an 8.9% late rate. The issue isn't delivery speed, it's likely damage in transit. Better packaging requirements for heavy and bulky items could improve scores here without changing logistics at all.
+
+**4. Look at ways to grow average order value**
+Revenue growth has been entirely volume-driven since 2016; average order value has stayed flat at ~R$130-160 throughout. Bundles, cross-sell recommendations or free shipping thresholds could help increase what customers spend per order.
