@@ -12,14 +12,14 @@ SELECT
     CASE
         WHEN f.customer_state IN ('AM', 'RR', 'AP', 'PA', 'TO', 'RO', 'AC') THEN 'North'
         WHEN f.customer_state IN ('MA', 'PI', 'CE', 'RN', 'PB', 'PE', 'AL', 'SE', 'BA') THEN 'Northeast'
-        WHEN f.customer_state IN ('MT', 'MS', 'GO', 'DF')                    THEN 'Central-West'
-        WHEN f.customer_state IN ('SP', 'RJ', 'ES', 'MG')                    THEN 'Southeast'
-        WHEN f.customer_state IN ('PR', 'SC', 'RS')                           THEN 'South'
+        WHEN f.customer_state IN ('MT', 'MS', 'GO', 'DF') THEN 'Central-West'
+        WHEN f.customer_state IN ('SP', 'RJ', 'ES', 'MG') THEN 'Southeast'
+        WHEN f.customer_state IN ('PR', 'SC', 'RS') THEN 'South'
     END AS customer_region,
     f.seller_state,
     f.category_name_english,
-    DATE_PART('day', f.order_delivered_customer_date - f.order_purchase_timestamp)        AS days_to_delivery,
-    DATE_PART('day', f.order_delivered_customer_date - f.order_estimated_delivery_date)   AS days_diff_from_estimate,
+    DATE_PART('day', f.order_delivered_customer_date - f.order_purchase_timestamp) AS days_to_delivery,
+    DATE_PART('day', f.order_delivered_customer_date - f.order_estimated_delivery_date) AS days_diff_from_estimate,
     f.is_late_delivery,
     r.review_score
 FROM gold.fact_sales f
