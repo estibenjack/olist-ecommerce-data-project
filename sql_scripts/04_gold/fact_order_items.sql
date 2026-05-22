@@ -15,7 +15,7 @@ SELECT
 	oi.price,
 	oi.freight_value,
 	oi.total_item_value,
-	r.review_score,
+	CAST(r.review_score AS INTEGER) AS review_score,
 	o.is_late_delivery,
 	DATE_PART('day', o.order_delivered_customer_date - o.order_purchase_timestamp) AS days_to_delivery,
     DATE_PART('day', o.order_delivered_customer_date - o.order_estimated_delivery_date) AS days_diff_from_estimate
