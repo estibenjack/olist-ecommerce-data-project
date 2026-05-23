@@ -11,6 +11,7 @@
 - [Tools Used](#️-tools-used)
 - [Key KPIs Analysed](#-key-kpis-analysed)
 - [Data Architecture](#️-data-architecture)
+- [About Me](#-about-me)
 
 ---
 
@@ -282,11 +283,25 @@ _**Example logic: Building dim_date**_
 ```sql
 INSERT INTO gold.dim_date (date_id, full_date, year, month, month_name, quarter)
 SELECT
-    ROW_NUMBER() OVER (ORDER BY d::DATE)        AS date_id,
-    d::DATE                                      AS full_date,
-    DATE_PART('year', d)::INT                    AS year,
-    DATE_PART('month', d)::INT                   AS month,
-    TO_CHAR(d, 'Month')                          AS month_name,
-    DATE_PART('quarter', d)::INT                 AS quarter
+    ROW_NUMBER() OVER (ORDER BY d::DATE) AS date_id,
+    d::DATE AS full_date,
+    DATE_PART('year', d)::INT AS year,
+    DATE_PART('month', d)::INT AS month,
+    TO_CHAR(d, 'Month') AS month_name,
+    DATE_PART('quarter', d)::INT AS quarter
 FROM GENERATE_SERIES('2016-01-01', '2018-12-31', INTERVAL '1 day') AS d;
 ```
+
+---
+
+<div align="center">
+
+## 👨🏼‍💻 About Me
+
+**Steven Jackson** — MSc in Software Development — Queen's University Belfast
+
+If you'd like to connect or have any questions/suggestions about the project, feel free to reach out 👇🏻
+
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Steven%20Jackson-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/steven-jackson-62b795193/)
+
+</div>
