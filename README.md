@@ -209,7 +209,7 @@ FROM GENERATE_SERIES('2016-01-01', '2018-12-31', INTERVAL '1 day') AS d;
 
 - **Revenue growth is volume-driven**
 
-Orders grew from ~100/month in late 2016 to 6,000+/month by mid 2018. Total revenue across the period was R$13.2M across 96K orders. Average order value stayed flat at ~R$130-160 throughout. Olist is bringing in more customers but spend per customer isn't increasing.
+Orders grew from 750/month in January 2017 to 6,000-7,000+/month by late 2017 and through 2018, with a peak of 7,289 orders in November 2017, likely driven by Black Friday. Total revenue across the period was R$13.2M across 96K orders. Average order value stayed flat at ~R$146-170 throughout. Olist is bringing in more customers but spend per customer isn't increasing.
 
 - **Late delivery is the biggest driver of low satisfaction**
 
@@ -217,11 +217,11 @@ On-time orders average a review score of 4.21. Late orders average 2.55 — a 1.
 
 - **The Northeast is the highest-risk region**
 
-The North is slow (22.2 avg days) but predictable — customers seem to accept the wait. The Northeast is the bigger problem: 14.2% late rate (highest of any region), 3.91 avg score (lowest), and Olist is regularly missing its own delivery estimates. Worst states: AL (24.1% late), MA (3.76 avg score), CE (1,426 orders affected).
+The North is slow (22.2 avg days) but predictable — customers seem to accept the wait. The Northeast is the bigger problem: 14.1% late rate (highest of any region), 3.91 avg score (lowest), and Olist is regularly missing its own delivery estimates. Worst states: AL (24.1% late), MA (3.76 avg score), CE (15.3% late, 1,280 orders affected).
 
 - **Bed, Bath & Table and Office Furniture are the highest-risk categories**
 
-Bed, Bath & Table has the most late deliveries by volume (920) and a 3.93 score. Office Furniture scores 3.52, the lowest of any category with 1,000+ orders, despite only an 8.9% late rate, suggesting damage in transit for heavy items.
+Bed, Bath & Table has the most late deliveries by volume (811) and a 3.93 score. Office Furniture scores 3.52, the lowest of any category with 1,000+ orders, despite only an 8.9% late rate, suggesting damage in transit for heavy items.
 
 ---
 
@@ -263,11 +263,11 @@ The Year slicer lets you compare 2017 and 2018 side by side. Here's an example w
 
 **1. Fix delivery reliability in the Northeast**
 
-The Northeast has a 14.2% late rate — nearly double the Southeast. Alagoas (AL), Maranhão (MA) and Ceará (CE) are the worst states. Improving logistics partnerships or setting more realistic delivery estimates for this region would have the biggest impact on customer satisfaction.
+The Northeast has a 14.1% late rate — nearly double the Southeast. Alagoas (AL), Maranhão (MA) and Ceará (CE) are the worst states. Improving logistics partnerships or setting more realistic delivery estimates for this region would have the biggest impact on customer satisfaction.
 
 **2. Review fulfilment for the Bed, Bath & Table category**
 
-920 late deliveries and a 3.93 score make this the highest-risk category by volume. It's worth looking at whether sellers in this category are consistently missing shipping windows and whether tighter SLAs would help.
+811 late deliveries and a 3.93 score make this the highest-risk category by volume. It's worth looking at whether sellers in this category are consistently missing shipping windows and whether tighter SLAs would help.
 
 **3. Investigate packaging for Office Furniture**
 
@@ -275,4 +275,4 @@ Office Furniture scores 3.52, the lowest of any major category, despite only an 
 
 **4. Look at ways to grow average order value**
 
-Revenue growth has been entirely volume-driven since 2016; average order value has stayed flat at ~R$130-160 throughout. Bundles, cross-sell recommendations or free shipping thresholds could help increase what customers spend per order.
+Revenue growth has been entirely volume-driven since 2016; average order value has stayed flat at ~R$146-170 throughout. Bundles, cross-sell recommendations or free shipping thresholds could help increase what customers spend per order.
