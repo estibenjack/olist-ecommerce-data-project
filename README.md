@@ -1,5 +1,19 @@
 # 🚀 Brazilian E-Commerce End-to-End Data Analytics Project
 
+## Contents
+
+- [Business Scenario](#-business-scenario)
+- [Dashboard](#-dashboard)
+- [Key Findings](#-key-findings)
+- [Recommendations](#-recommendations)
+- [Data Visualisation](#-data-visualisation)
+- [Dataset](#-dataset)
+- [Tools Used](#️-tools-used)
+- [Key KPIs Analysed](#-key-kpis-analysed)
+- [Data Architecture](#️-data-architecture)
+
+---
+
 ## 🎭 Business Scenario
 
 It's mid 2018, and I'm working as a Data Analyst for Olist, a Brazilian e-commerce marketplace. The executive leadership team has requested a clear picture of how the business has performed over the previous two years, with a particular focus on revenue growth, regional performance and customer satisfaction.
@@ -29,6 +43,82 @@ My goal was to design and build an end-to-end analytics pipeline that transforme
 
 ---
 
+## 🔍 Key Findings
+
+> **Note:** Figures below reflect the corrected star schema data. The original view-based gold layer was overstating total revenue by ~15% (R$15.4M) due to row duplication from view joins. The star schema rebuild corrected this to R$13.2M.
+
+- **Revenue growth is volume-driven**
+
+Orders grew from 750/month in January 2017 to 6,000-7,000+/month by late 2017 and through 2018, with a peak of 7,289 orders in November 2017, likely driven by Black Friday. Total revenue across the period was R$13.2M across 96K orders. Average order value stayed flat at ~R$146-170 throughout. Olist is bringing in more customers but spend per customer isn't increasing.
+
+- **Late delivery is the biggest driver of low satisfaction**
+
+On-time orders average a review score of 4.21. Late orders average 2.55 — a 1.66 point drop on a 1-5 scale. Late orders also take 3x longer to arrive (30.9 days vs 10.4).
+
+- **The Northeast is the highest-risk region**
+
+The North is slow (22.2 avg days) but predictable — customers seem to accept the wait. The Northeast is the bigger problem: 14.1% late rate (highest of any region), 3.91 avg score (lowest), and Olist is regularly missing its own delivery estimates. Worst states: AL (24.1% late), MA (3.76 avg score), CE (15.3% late, 1,280 orders affected).
+
+- **Bed, Bath & Table and Office Furniture are the highest-risk categories**
+
+Bed, Bath & Table has the most late deliveries by volume (811) and a 3.93 score. Office Furniture scores 3.52, the lowest of any category with 1,000+ orders, despite only an 8.9% late rate, suggesting damage in transit for heavy items.
+
+---
+
+## 💡 Recommendations
+
+**1. Fix delivery reliability in the Northeast**
+
+The Northeast has a 14.1% late rate — nearly double the Southeast. Alagoas (AL), Maranhão (MA) and Ceará (CE) are the worst states. Improving logistics partnerships or setting more realistic delivery estimates for this region would have the biggest impact on customer satisfaction.
+
+**2. Review fulfilment for the Bed, Bath & Table category**
+
+811 late deliveries and a 3.93 score make this the highest-risk category by volume. It's worth looking at whether sellers in this category are consistently missing shipping windows and whether tighter SLAs would help.
+
+**3. Investigate packaging for Office Furniture**
+
+Office Furniture scores 3.52, the lowest of any major category, despite only an 8.9% late rate. The issue isn't delivery speed, it's likely damage in transit. Better packaging requirements for heavy and bulky items could improve scores here without changing logistics at all.
+
+**4. Look at ways to grow average order value**
+
+Revenue growth has been entirely volume-driven since 2016; average order value has stayed flat at ~R$146-170 throughout. Bundles, cross-sell recommendations or free shipping thresholds could help increase what customers spend per order.
+
+---
+
+## 📊 Data Visualisation
+
+I created a single page dashboard in Power BI to present my findings. A Year slicer in the top right filters all visuals at once, and clicking any chart cross-filters the rest of the page.
+
+Below is a walkthrough of each row:
+
+**Top row — KPI cards**
+
+![Top row screenshot](assets/row-1-screenshot.png)
+
+Five headline numbers across the top: total revenue (R$13.2M), total orders (96K), late delivery rate, average review score and average delivery days. These give a quick snapshot of the business before looking at the detail below.
+
+**Middle row — Revenue and growth**
+
+![Middle row screenshot](assets/row-2-screenshot.png)
+
+- _Average Order Value Over Time_ — a flat line throughout the period, which confirms growth isn't coming from bigger baskets
+- _Revenue & Order Volume Over Time_ — revenue and order count plotted together, both climbing steadily from early 2017 to 2018, driven by volume
+- _Late Delivery % Over Time_ — shows how the late delivery rate trended month by month, useful for spotting whether the problem is getting better or worse over time
+
+**Bottom row — Delivery and satisfaction**
+
+![Bottom row screenshot](assets/row-3-screenshot.png)
+
+- _On-Time vs Late: Review Score_ — the clearest chart on the page. Two bars: 4.21 for on-time deliveries, 2.55 for late deliveries. The subtitle also shows the delivery time gap (30.9 days vs 10.4)
+- _Avg Review Score by Region_ — satisfaction broken down by Brazil's five regions, with the Northeast visibly below the rest
+- _Late Delivery vs Satisfaction by Category_ — a scatter plot where each dot is a product category, plotted by late delivery rate and average review score. Categories sitting bottom-right are the highest risk
+
+The Year slicer lets you compare 2017 and 2018 side by side. Here's an example with 2017 selected:
+
+![Filtered dashboard — 2017](assets/filtered-dashboard.png)
+
+---
+
 ## 📊 Dataset
 
 This project uses the [Brazilian E-Commerce Public Dataset by Olist](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce), sourced from Kaggle.
@@ -45,6 +135,29 @@ The dataset contains 1.5 million rows across 9 tables covering real commercial t
 | SQL        | Layered pipeline from raw ingestion through to business-ready analytical views |
 | Power BI   | Interactive dashboard development and business visualisation                   |
 | GitHub     | Project documentation and version control                                      |
+
+---
+
+## 📈 Key KPIs Analysed
+
+### Revenue & Growth
+
+- Total Revenue (R$13.2M across delivered orders)
+- Average Order Value (AOV) — flat at ~R$146-170 throughout
+- Order Volume Growth — grew from ~100/month in late 2016 to 6,000+/month by mid-2018
+- Monthly Revenue Growth % — tracked over time to identify trends
+
+### Customer Experience
+
+- Average Review Score (4.08 overall)
+- Average Delivery Time (12.01 days)
+- Late Delivery Rate (7.91% overall)
+- On-Time vs Late Review Score comparison (4.21 vs 2.55)
+
+### Commercial Performance
+
+- Regional Delivery & Satisfaction Performance
+- Product Category Risk Analysis (late delivery rate vs satisfaction score)
 
 ---
 
@@ -177,102 +290,3 @@ SELECT
     DATE_PART('quarter', d)::INT                 AS quarter
 FROM GENERATE_SERIES('2016-01-01', '2018-12-31', INTERVAL '1 day') AS d;
 ```
-
----
-
-## 📈 Key KPIs Analysed
-
-### Revenue & Growth
-
-- Total Revenue (R$13.2M across delivered orders)
-- Average Order Value (AOV) — flat at ~R$130-160 throughout
-- Order Volume Growth — grew from ~100/month in late 2016 to 6,000+/month by mid-2018
-- Monthly Revenue Growth % — tracked over time to identify trends
-
-### Customer Experience
-
-- Average Review Score (4.08 overall)
-- Average Delivery Time (12.01 days)
-- Late Delivery Rate (7.91% overall)
-- On-Time vs Late Review Score comparison (4.21 vs 2.55)
-
-### Commercial Performance
-
-- Regional Delivery & Satisfaction Performance
-- Product Category Risk Analysis (late delivery rate vs satisfaction score)
-
----
-
-## 🔍 Key Findings
-
-> **Note:** Figures below reflect the corrected star schema data. The original view-based gold layer was overstating total revenue by ~15% (R$15.4M) due to row duplication from view joins. The star schema rebuild corrected this to R$13.2M.
-
-- **Revenue growth is volume-driven**
-
-Orders grew from 750/month in January 2017 to 6,000-7,000+/month by late 2017 and through 2018, with a peak of 7,289 orders in November 2017, likely driven by Black Friday. Total revenue across the period was R$13.2M across 96K orders. Average order value stayed flat at ~R$146-170 throughout. Olist is bringing in more customers but spend per customer isn't increasing.
-
-- **Late delivery is the biggest driver of low satisfaction**
-
-On-time orders average a review score of 4.21. Late orders average 2.55 — a 1.66 point drop on a 1-5 scale. Late orders also take 3x longer to arrive (30.9 days vs 10.4).
-
-- **The Northeast is the highest-risk region**
-
-The North is slow (22.2 avg days) but predictable — customers seem to accept the wait. The Northeast is the bigger problem: 14.1% late rate (highest of any region), 3.91 avg score (lowest), and Olist is regularly missing its own delivery estimates. Worst states: AL (24.1% late), MA (3.76 avg score), CE (15.3% late, 1,280 orders affected).
-
-- **Bed, Bath & Table and Office Furniture are the highest-risk categories**
-
-Bed, Bath & Table has the most late deliveries by volume (811) and a 3.93 score. Office Furniture scores 3.52, the lowest of any category with 1,000+ orders, despite only an 8.9% late rate, suggesting damage in transit for heavy items.
-
----
-
-## 📊 Data Visualisation
-
-I created a single page dashboard in Power BI to present my findings. A Year slicer in the top right filters all visuals at once, and clicking any chart cross-filters the rest of the page.
-
-Below is a walkthrough of each row:
-
-**Top row — KPI cards**
-
-![Top row screenshot](assets/row-1-screenshot.png)
-
-Five headline numbers across the top: total revenue (R$13.2M), total orders (96K), late delivery rate, average review score and average delivery days. These give a quick snapshot of the business before looking at the detail below.
-
-**Middle row — Revenue and growth**
-
-![Middle row screenshot](assets/row-2-screenshot.png)
-
-- _Average Order Value Over Time_ — a flat line throughout the period, which confirms growth isn't coming from bigger baskets
-- _Revenue & Order Volume Over Time_ — revenue and order count plotted together, both climbing steadily from early 2017 to 2018, driven by volume
-- _Late Delivery % Over Time_ — shows how the late delivery rate trended month by month, useful for spotting whether the problem is getting better or worse over time
-
-**Bottom row — Delivery and satisfaction**
-
-![Bottom row screenshot](assets/row-3-screenshot.png)
-
-- _On-Time vs Late: Review Score_ — the clearest chart on the page. Two bars: 4.21 for on-time deliveries, 2.55 for late deliveries. The subtitle also shows the delivery time gap (30.9 days vs 10.4)
-- _Avg Review Score by Region_ — satisfaction broken down by Brazil's five regions, with the Northeast visibly below the rest
-- _Late Delivery vs Satisfaction by Category_ — a scatter plot where each dot is a product category, plotted by late delivery rate and average review score. Categories sitting bottom-right are the highest risk
-
-The Year slicer lets you compare 2017 and 2018 side by side. Here's an example with 2017 selected:
-
-![Filtered dashboard — 2017](assets/filtered-dashboard.png)
-
----
-
-## 💡 Recommendations
-
-**1. Fix delivery reliability in the Northeast**
-
-The Northeast has a 14.1% late rate — nearly double the Southeast. Alagoas (AL), Maranhão (MA) and Ceará (CE) are the worst states. Improving logistics partnerships or setting more realistic delivery estimates for this region would have the biggest impact on customer satisfaction.
-
-**2. Review fulfilment for the Bed, Bath & Table category**
-
-811 late deliveries and a 3.93 score make this the highest-risk category by volume. It's worth looking at whether sellers in this category are consistently missing shipping windows and whether tighter SLAs would help.
-
-**3. Investigate packaging for Office Furniture**
-
-Office Furniture scores 3.52, the lowest of any major category, despite only an 8.9% late rate. The issue isn't delivery speed, it's likely damage in transit. Better packaging requirements for heavy and bulky items could improve scores here without changing logistics at all.
-
-**4. Look at ways to grow average order value**
-
-Revenue growth has been entirely volume-driven since 2016; average order value has stayed flat at ~R$146-170 throughout. Bundles, cross-sell recommendations or free shipping thresholds could help increase what customers spend per order.
